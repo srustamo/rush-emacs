@@ -88,6 +88,7 @@
     etags-select
 	etags-table
 	ctags-update
+	terminal-here
 	)
   
   "List of packages that I like.")
