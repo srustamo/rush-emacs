@@ -1,3 +1,4 @@
+;;https://c25l.gitlab.io/2017/04/finding-all-org-mode-tags/
 (defun rush-org-tags ()                                                                                                                              
 (interactive)
   (get-buffer-create "*org-tags*")                                                                                                                   
