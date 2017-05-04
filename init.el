@@ -125,6 +125,11 @@
 
 ;; (load  (expand-file-name "my-loadpackages.el" emacs-d))
 (require 'cl)
+;;** package-archives
+(setq package-archives
+      '(("melpa" . "http://melpa.org/packages/")
+        ;; ("melpa-stable" . "http://melpa-stable.milkbox.net/packages/")
+        ("gnu" . "http://elpa.gnu.org/packages/")))
 ;;** use-package
 (eval-when-compile
   (require 'use-package))
@@ -2985,6 +2990,14 @@ and append it."
 (run-with-idle-timer
  6 nil
  (lambda () (load-file (expand-file-name "elisp/setup-tags/setup-tags.el" emacs-d))))
+;;** dumb-jump
+(use-package dumb-jump
+  ;; :bind (("M-g o" . dumb-jump-go-other-window)
+  ;;        ("M-g j" . dumb-jump-go)
+  ;;        ("M-g x" . dumb-jump-go-prefer-external)
+  ;;        ("M-g z" . dumb-jump-go-prefer-external-other-window))
+  :config (setq dumb-jump-selector 'ivy) ;; (setq dumb-jump-selector 'helm)
+  :ensure)
 ;;* Diff
 ;;** diff-hl
 ;; 25_01_2016
