@@ -2336,9 +2336,10 @@ With C-u C-u: insert date and time"
 ;(simplenote-setup)
 ;;* Epub
 (use-package nov 
- :defer 5 
+ ;; :defer 5 
  :config
-(add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+;; (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+(push '("\\.epub\\'" . nov-mode) auto-mode-alist)
 )
 ;;* Emacs daemon
 (use-package server
