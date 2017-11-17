@@ -72,6 +72,7 @@
 	golden-ratio
 	google-c-style
 	grr
+	grab-mac-link
 	headlong
 	helm
 	helm-config
