@@ -36,6 +36,7 @@
 	company
 	company-statistics
 	counsel
+	counsel-osx-app
 	crosshairs
 	ctags-update
 	define-word
