@@ -115,6 +115,7 @@
 	orglue
 	ox-pandoc
 	ox-reveal
+	paradox
 	pdf-tools
 	persp-projectile
 	powerline
@@ -126,6 +127,7 @@
 	recentf 
 	request
 	rush-company
+	seeing-is-believing
 	simpleclip
 	simplenote2
 	slime
