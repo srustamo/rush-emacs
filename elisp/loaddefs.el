@@ -3,8 +3,18 @@
 ;;; Code:
 
 
+;;;### (autoloads nil "buffers" "buffers.el" (23058 49907 0 0))
+;;; Generated autoloads from buffers.el
+
+(autoload 'rush/kill-this-buffer "buffers" "\
+Kill the current buffer.
+
+\(fn)" t nil)
+
+;;;***
+
 ;;;### (autoloads nil "open-file-at-point" "open-file-at-point.el"
-;;;;;;  (22747 28173 0 0))
+;;;;;;  (23054 44497 0 0))
 ;;; Generated autoloads from open-file-at-point.el
 
 (autoload 'open-file-at-cursor "open-file-at-point" "\
@@ -18,7 +28,7 @@ Open the file path under cursor.
 
 ;;;***
 
-;;;### (autoloads nil "open-iterm" "open-iterm.el" (22747 28509 0
+;;;### (autoloads nil "open-iterm" "open-iterm.el" (23054 44497 0
 ;;;;;;  0))
 ;;; Generated autoloads from open-iterm.el
 
@@ -41,6 +51,23 @@ Go to present working dir and focus iterm
 
 
 \(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads nil "text-manipulation" "text-manipulation.el"
+;;;;;;  (23054 54998 0 0))
+;;; Generated autoloads from text-manipulation.el
+
+(autoload 'sort-symbols "text-manipulation" "\
+Sort symbols in region alphabetically, in REVERSE if negative.
+    See `sort-words'.
+
+\(fn REVERSE BEG END)" t nil)
+
+;;;***
+
+;;;### (autoloads nil nil ("list-all-org-tags.el") (23054 51229 0
+;;;;;;  0))
 
 ;;;***
 
