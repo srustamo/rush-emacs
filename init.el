@@ -339,7 +339,16 @@
 (require 'rush-evil)
 ;;* Org
 ;;27-02-2017 initialize  org
-(use-package org 
+;; (use-package org 
+;;   :defer 4
+;;   ;; :diminish W
+;;   :config
+;;   ; (define-key org-mode-map (kbd "-") nil)
+;;   ; :bind (:map org-mode-map 
+;;         ; (("J" . nil))) ;; list of cons with key/command  to bind in the key map
+;;   )
+;;28-11-2017
+(use-package rush-org 
   :defer 4
   ;; :diminish W
   :config
