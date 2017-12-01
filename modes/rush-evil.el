@@ -39,7 +39,7 @@
 ;; }}
 
 ;; {{orgstruct-mode 
-(define-key evil-normal-state-map (kbd "gl") 'orgstruct-hijacker-outline-next-visible-heading)
+;; (define-key evil-normal-state-map (kbd "gl") 'orgstruct-hijacker-outline-next-visible-heading)
 ;; }}
 ;; enable evil-mode
 (evil-mode 1)

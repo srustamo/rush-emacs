@@ -21,8 +21,8 @@
   ;; arrows
   (define-key map "j" 'org-agenda-next-item)
   (define-key map "k" 'org-agenda-previous-item)
-  (define-key map "h" 'org-agenda-earlier)
-  (define-key map "l" 'org-agenda-later)
+  (define-key map "l" 'org-agenda-earlier)
+  (define-key map "h" 'org-agenda-later)
   ;; worf
   ;; (define-key map "s" 'worf-schedule)
   ;; (define-key map "N" 'worf-agenda-narrow)
@@ -40,7 +40,8 @@
   (define-key map "S" 'org-save-all-org-buffers)
   ;; (define-key map "T" 'worf-clock-in-and-out)
   ;; disable
-  (define-key map "f" nil))
+  ;; (define-key map "f" nil)
+  )
 
 (defhydra hydra-org-agenda-ex (:color blue :columns 2)
   "x"

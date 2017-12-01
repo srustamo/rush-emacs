@@ -144,6 +144,7 @@
 	undo-tree
 	use-package
 	vimish-fold
+	vlf
 	wcheck-mode
 	wgrep
 	wgrep-ag

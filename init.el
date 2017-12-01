@@ -192,9 +192,15 @@
 ;;** evil-org https://github.com/edwtjo/evil-org-mode
 ;;(add-to-list 'load-path "~/.emacs.d/plugins/evil-org-mode")
 (use-package evil-org
- :defer 30
-;  :config (define-key evil-org-mode-map "J" nil)
- :diminish evil-org-mode
+ ;; :defer 3
+ :after org
+ :config
+ (add-hook 'org-mode-hook 'evil-org-mode)
+ (add-hook 'evil-org-mode-hook
+           (lambda ()
+             (evil-org-set-key-theme '(navigation))))
+ ;; (define-key evil-org-mode-map "J" nil)
+ ;; :diminish evil-org-mode
 ;:bind
 ;(:map evil-org-mode-map
 ;       ("J" . nil))
