@@ -1,6 +1,6 @@
 ;;* Requires
 (require 'org)
-
+(require 'ox-taskjuggler)
 ;;* org-agenda-mode-map
 (require 'org-agenda)
 
@@ -29,7 +29,7 @@
   ;; (define-key map "W" 'worf-agenda-widen)
   ;; (define-key map "t" 'worf-todo)
   ;; misc
-  ;; (define-key map "p" 'ora-org-pomodoro)
+  (define-key map "P" 'rush-org-pomodoro)
   (define-key map (kbd "C-j") 'org-open-at-point)
   (define-key map "i" 'org-agenda-clock-in)
   (define-key map "O" 'org-agenda-clock-out)
@@ -58,5 +58,15 @@
   ("r" org-agenda-redo "redo")
   ("u" org-agenda-bulk-unmark "unmark")
   ("z" org-agenda-add-note "note"))
+
+(setq org-pomodoro-ask-upon-killing nil)
+
+(defun rush-org-pomodoro ()
+  (interactive)
+  (if (eq major-mode 'org-agenda-mode)
+      (progn
+        (org-pomodoro)
+        (org-save-all-org-buffers))
+    (org-pomodoro)))
 
 (provide 'rush-org)
