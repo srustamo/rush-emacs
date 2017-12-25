@@ -15,4 +15,5 @@
 (add-hook 'latex-mode-hook 'rush-latex-hook)
 (add-hook 'latex-mode-hook 'nlinum-mode)
 (add-hook 'LaTeX-mode-hook 'nlinum-mode)
+(add-hook 'lua-mode-hook #'rush-lua-mode-company-init)
 (provide 'hooks)
