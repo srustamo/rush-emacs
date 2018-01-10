@@ -16,4 +16,5 @@
 (add-hook 'latex-mode-hook 'nlinum-mode)
 (add-hook 'LaTeX-mode-hook 'nlinum-mode)
 (add-hook 'lua-mode-hook #'rush-lua-mode-company-init)
+(add-hook 'term-mode-hook #'eterm-256color-mode)
 (provide 'hooks)
