@@ -20,6 +20,7 @@
           (add-to-list 'load-path (expand-file-name x emacs-git)))
         (delete ".." (directory-files emacs-git))))
 (add-to-list 'load-path (expand-file-name "git/org-mode/lisp/" emacs-d))
+(add-to-list 'load-path (expand-file-name "git/org-mode/contrib/lisp/" emacs-d))
 (add-to-list 'load-path (expand-file-name "git/org-toodledo/" emacs-d))
 (add-to-list 'load-path (expand-file-name "git/plain-org-wiki/" emacs-d))
 (add-to-list 'load-path (expand-file-name "personal/" emacs-d))
@@ -148,6 +149,9 @@
 (require 'hooks)
 ;;* Modes
 (add-to-list 'auto-mode-alist '("\\.tex\\'" . TeX-latex-mode))
+;;** TaskJuggler mode
+(require 'taskjuggler-mode)
+(add-to-list 'auto-mode-alist '("\\.tjp\\'" . taskjuggler-mode))
 ;;* Benchmark init.el
 ;; 18_01_2016
 ;; use-package did not work
@@ -477,7 +481,7 @@
 ;;** Org Toodledo
 ;; 9 Jul 2014 https://github.com/christopherjwhite/org-toodledo
 (use-package org-toodledo
-  :defer 20		 
+  :defer 2		 
   :config
 )
 ;;(setq org-toodledo-sync-on-save "yes")
@@ -2112,7 +2116,7 @@ With C-u C-u: insert date and time"
 ;; (global-auto-revert-mode t)
 ;;* History
 ;; http://pages.sachachua.com/.emacs.d/Sacha.html#sec-1-4-4
-(setq savehist-file "~/Dropbox/source/site-lisp/init/savehist")
+;; (setq savehist-file "~/Dropbox/source/site-lisp/init/savehist")
 ;; (savehist-mode 1)
 (setq history-length 200) ;; this variable is set to 100 by M-x set variable above
 (setq history-delete-duplicates t)
@@ -2139,6 +2143,10 @@ With C-u C-u: insert date and time"
 ;; (add-hook 'lisp-interaction-mode-hook 'eldoc-mode)
 ;; (add-hook 'ielm-mode-hook 'eldoc-mode)
 
+;;* Lua
+(use-package rush-lua
+  :defer 2
+  ) 
 ;;* IRC
 (use-package erc
   :defer 30)
@@ -3009,9 +3017,9 @@ and append it."
 (setq org-crypt-key nil)
 ;;* ctags gtags etc
 ;; 08_01_2016
-(run-with-idle-timer
- 6 nil
- (lambda () (load-file (expand-file-name "elisp/setup-tags/setup-tags.el" emacs-d))))
+;; (run-with-idle-timer
+;;  6 nil
+;;  (lambda () (load-file (expand-file-name "elisp/setup-tags/setup-tags.el" emacs-d))))
 ;;** dumb-jump
 (use-package dumb-jump
   ;; :bind (("M-g o" . dumb-jump-go-other-window)
