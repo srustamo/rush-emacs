@@ -31,6 +31,7 @@
 	benchmark-init-autoloads
 	bm
 	bookmark
+	bind-key
 	cl
 	cmake-mode
 	company
@@ -45,6 +46,7 @@
 	dired-rainbow
 	dired-x
 	dumb-jump
+	diminish
 	eclipse-theme
 	edit-server
 	elfeed
@@ -95,6 +97,7 @@
 	jedi
 	key-chord
 	keyfreq
+	keys
 	lispy
 	magit
 	make-it-so
@@ -115,12 +118,14 @@
 	orglue
 	ox-pandoc
 	ox-reveal
+	; open-file-at-point
 	paradox
 	pdf-tools
 	persp-projectile
 	powerline
 	powerline-evil
 	projectile
+	popup
 	rainbow-delimiters
 	rainbow-mode
 	ranger
@@ -151,6 +156,7 @@
 	which-key
 	window-numbering
 	worf
+	whitespace
 	yaml-mode
 	yasnippet
 	)
