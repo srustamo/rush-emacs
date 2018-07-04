@@ -1,6 +1,7 @@
 [submodule "org-mode"]
 	path = git/org-mode
-	url = git://orgmode.org/org-mode.git
+	; url = git://orgmode.org/org-mode.git
+	url = https://code.orgmode.org/bzg/org-mode.git
 [submodule "git/org-toodledo"]
 	path = git/org-toodledo
 	url = https://github.com/srustamo/org-toodledo.git
