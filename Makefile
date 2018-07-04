@@ -10,7 +10,7 @@ BASEDIR := $(shell pwd)
 
 install: upgrade
 	cd git/org-mode && make compile 2>&1 | tee -a ../../etc/log
-	cd $(BASEDIR) && mkdir -p personal
+	cd "$(BASEDIR)" && mkdir -p personal
 	yes n | cp -i etc/init-template.el personal/personal-init.el
 	yes n | cp -i etc/ispell_dict personal/ispell_dict
 	yes n | cp -i etc/abbrev_defs personal/abbrev_defs
@@ -27,7 +27,7 @@ pull:
 	git submodule update 2>&1 | tee -a etc/log
 
 upgrade: pull
-	cd $(BASEDIR) && $(emacs) -batch -l packages.el 2>&1 | tee -a etc/log
+	cd "$(BASEDIR)" && $(emacs) -batch -l packages.el 2>&1 | tee -a etc/log
 
 up: upgrade
 	$(emacs) -Q -l init.el
