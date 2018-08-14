@@ -12,6 +12,8 @@
 
 (setq company-backends
       '(company-elisp
+		(company-anaconda :with company-capf)
+		;; company-anaconda
         ;; company-semantic
         company-capf
         (company-dabbrev-code company-gtags company-etags

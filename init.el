@@ -1576,6 +1576,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; (autoload 'save-current-configuration "revive" "Save status" t)
 ;; (autoload 'resume "revive" "Resume Emacs" t)
 ;; (autoload 'wipe "revive" "Wipe Emacs" t)
+;;** Tooltips
+;; (require 'pos-tip)
 ;;* Misc
 ;;** Visual bell
 ;; 12 Mar 2014 http://www.emacs.uniyar.ac.ru/doc/em24h/emacs101.htm
@@ -1971,6 +1973,12 @@ With C-u C-u: insert date and time"
 (use-package rush-company
  :defer 2
   )
+;;*** company-quickhelp 
+(use-package company-quickhelp
+  :hook (company-mode . company-quickhelp-mode)
+  :config
+  (setq company-quickhelp-delay .1)
+  (setq pos-tip-use-relative-coordinates t))
 ;;*** company org-mode completion
 ;;;https://github.com/company-mode/company-mode/issues/50
 ;;(defun add-pcomplete-to-capf ()
@@ -3094,6 +3102,10 @@ is already narrowed."
 (use-package plain-org-wiki
   ;; :defer t
   )
+;;* Python
+;;** Jedi.el
+(setq jedi:complete-on-dot t) 
+;;** Anaconda.el
 ;;* Thing at the end : testing
 ;;** Sml problem - see above
 ;; (sml/setup)
