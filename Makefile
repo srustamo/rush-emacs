@@ -10,11 +10,12 @@ BASEDIR := $(shell pwd)
 
 install: upgrade
 	cd git/org-mode && make compile 2>&1 | tee -a ../../etc/log
-	cd "$(BASEDIR)" && mkdir -p personal
-	yes n | cp -i etc/init-template.el personal/personal-init.el
-	yes n | cp -i etc/ispell_dict personal/ispell_dict
-	yes n | cp -i etc/abbrev_defs personal/abbrev_defs
-	yes n | cp -ri etc/org .
+	cd "$(BASEDIR)" && mkdir -p personal | tee -a /etc/log
+	yes n | cp -i etc/init-template.el personal/personal-init.el | tee -a /etc/log
+	yes n | cp -i etc/ispell_dict personal/ispell_dict | tee -a /etc/log
+	yes n | cp -i etc/abbrev_defs personal/abbrev_defs | tee -a /etc/log 
+	# yes n | cp -ri etc/org . | tee -a /etc/log 
+
 	make run
 
 bare:
