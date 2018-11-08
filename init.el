@@ -3138,7 +3138,7 @@ is already narrowed."
 (setq gc-cons-threshold best-gc-cons-threshold)
 ;;** load personal settings
 ;;06-03-2017
-(require 'rush-init nil)
+(require 'personal-init)
 
 ;;* Local variables 
 ;; 02_12_2015 https://mail.google.com/mail/u/0/#inbox/150e79fd7086d534
