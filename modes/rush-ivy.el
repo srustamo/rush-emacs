@@ -2,6 +2,9 @@
 (require 'ivy)
 (require 'ivy-hydra)
 (require 'counsel)
+(require 'ivy-rich)
+(ivy-rich-mode 1)
+ 
 (csetq ivy-display-style 'fancy)
 (csetq ivy-count-format "(%d/%d) ")
 (csetq ivy-use-virtual-buffers t)

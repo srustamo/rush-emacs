@@ -93,6 +93,7 @@
 	interaction-log
 	ispell
 	ivy-hydra
+	ivy-rich
 	j-mode
 	jedi
 	key-chord
