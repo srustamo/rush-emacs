@@ -704,4 +704,75 @@
 ;; (evil-exchange-install)
 ;; ;; }}
 
+
+(defun my-line-str (&optional line-end)
+  (buffer-substring-no-properties (line-beginning-position)
+                                  (if line-end line-end (line-end-position))))
+;; {{
+(defvar evil-global-markers-history nil)
+(defadvice evil-set-marker (before evil-set-marker-before-hack activate)
+  (let* ((args (ad-get-args 0))
+         (c (nth 0 args))
+         (pos (or (nth 1 args) (point))))
+    ;; only rememeber global markers
+    (when (and (>= c ?A) (<= c ?Z) buffer-file-name)
+      (setq evil-global-markers-history
+            (delq nil
+                  (mapcar `(lambda (e)
+                             (unless (string-match (format "^%s@" (char-to-string ,c)) e)
+                               e))
+                          evil-global-markers-history)))
+      (setq evil-global-markers-history
+            (add-to-list 'evil-global-markers-history
+                         (format "%s@%s:%d:%s"
+                                 (char-to-string c)
+                                 (file-truename buffer-file-name)
+                                 (line-number-at-pos pos)
+                                 (string-trim (my-line-str))))))))
+
+(defadvice evil-goto-mark-line (around evil-goto-mark-line-hack activate)
+  (let* ((args (ad-get-args 0))
+         (c (nth 0 args))
+         (orig-pos (point)))
+
+    (condition-case nil
+        ad-do-it
+      (error (progn
+               (when (and (eq orig-pos (point)) evil-global-markers-history)
+                 (let* ((markers evil-global-markers-history)
+                        (i 0)
+                        m
+                        file
+                        found)
+                   (while (and (not found) (< i (length markers)))
+                     (setq m (nth i markers))
+                     (when (string-match (format "\\`%s@\\(.*?\\):\\([0-9]+\\):\\(.*\\)\\'"
+                                                 (char-to-string c))
+                                         m)
+                       (setq file (match-string-no-properties 1 m))
+                       (setq found (match-string-no-properties 2 m)))
+                     (setq i (1+ i)))
+                   (when file
+                     (find-file file)
+                     (counsel-etags-forward-line found)))))))))
+
+(defun counsel-evil-goto-global-marker ()
+  "Goto global evil marker."
+  (interactive)
+  (unless (featurep 'counsel-etags) (require 'counsel-etags))
+  (ivy-read "Goto global evil marker"
+            evil-global-markers-history
+            :action (lambda (m)
+                      (when (string-match "\\`[A-Z]@\\(.*?\\):\\([0-9]+\\):\\(.*\\)\\'" m)
+                        (let* ((file (match-string-no-properties 1 m))
+                               (linenum (match-string-no-properties 2 m)))
+                          ;; item's format is like '~/proj1/ab.el:39: (defun hello() )'
+                          (counsel-etags-push-marker-stack (point-marker))
+                          ;; open file, go to certain line
+                          (find-file file)
+                          (counsel-etags-forward-line linenum))
+                        ;; flash, Emacs v25 only API
+                        (xref-pulse-momentarily)))))
+;; }}
+
 (provide 'rush-evil)
