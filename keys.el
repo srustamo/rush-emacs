@@ -135,6 +135,7 @@
 (global-set-key (kbd "C-c m") 'counsel-osx-app)
 ;(global-set-key (kbd "C-c n") nil)
 ;(global-set-key (kbd "C-c o") 'counsel-outline)
+(global-set-key (kbd "C-c p") 'projectile-switch-project)
 ;(global-set-key (kbd "C-c q") nil)
 ;(global-set-key (kbd "C-c r") 'isearch-backward)
 ;(global-set-key (kbd "C-c s") 'isearch-forward-regexp)
@@ -249,6 +250,7 @@
   ("l" helm-locate "locate")
   ;; ("h" helm-google-suggest "google")
   ("w" plain-org-wiki "wiki")
+  ("G" hydra-git-gutter/body "Git Gutter" :exit t)
   ("q" nil "quit"))
 
 ;;** hydra-vi-toggle
