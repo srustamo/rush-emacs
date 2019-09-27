@@ -347,6 +347,38 @@
 (evil-mode t) ;; activating evil-mode after activating all other evil related mods
 ;;** load rush-evil.el
 (require 'rush-evil)
+;;** evil-terminal-cursor-change
+;; [2018-12-13 Thu] 
+
+ ;; (unless (display-graphic-p)
+ ;;           (require 'evil-terminal-cursor-changer)
+ ;; 		   (setq evil-motion-state-cursor 'box)  ; █
+ ;; 		   (setq evil-visual-state-cursor 'box)  ; █
+ ;; 		   (setq evil-normal-state-cursor 'box)  ; █
+ ;; 		   (setq evil-insert-state-cursor 'bar)  ; ⎸
+ ;; 		   (setq evil-emacs-state-cursor  'hbar) ; _
+ ;;           (evil-terminal-cursor-changer-activate) ; or (etcc-on)
+ ;;           )
+
+;; 18-02-2019
+;;(unless (display-graphic-p)
+;;      (use-package evil-terminal-cursor-changer
+;;        :ensure t
+;;        :init
+;;        (setq evil-motion-state-cursor 'box)  ; █
+;;        (setq evil-visual-state-cursor 'box)  ; █
+;;        (setq evil-normal-state-cursor 'box)  ; █
+;;        (setq evil-insert-state-cursor 'bar)  ; ⎸
+;;        (setq evil-emacs-state-cursor  'hbar) ; _
+;;        :config
+;;        (etcc-on)
+;;        ))
+;; 27-09-2019 https://github.com/syl20bnr/spacemacs/issues/7112#issuecomment-389855491
+(unless (display-graphic-p)
+ (add-hook 'evil-insert-state-entry-hook (lambda () (send-string-to-terminal "\033[5 q")))
+ (add-hook 'evil-normal-state-entry-hook (lambda () (send-string-to-terminal "\033[2 q"))) 
+)
+
 ;;* Org
 ;;27-02-2017 initialize  org
 ;; (use-package org 
