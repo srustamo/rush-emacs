@@ -19,7 +19,8 @@
         (company-dabbrev-code company-gtags company-etags
          company-keywords)
         company-files
-        company-dabbrev))
+        company-dabbrev
+	company-robe))
 
 (let ((map company-active-map))
   (mapc (lambda (x) (define-key map (format "%d" x)
