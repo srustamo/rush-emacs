@@ -776,6 +776,6 @@
 ;; }}
 ;; {{
 ;;13-05-2020 https://github.com/jacktasia/dumb-jump/issues/80
-(advice-add 'dumb-jump-go :before (lambda (&rest r) (evil-set-jump)))
+;; (advice-add 'dumb-jump-go :before (lambda (&rest r) (evil-set-jump)))
 ;; }}
 (provide 'rush-evil)

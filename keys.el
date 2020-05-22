@@ -165,6 +165,7 @@
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
 (global-set-key (kbd "C-x C-b") 'ibuffer-other-window)
 (global-set-key (kbd "C-x k") 'rush/kill-this-buffer)
+(global-set-key (kbd "C-x d") 'deer)
 ;;** Functional keys shortcuts
 ;(global-set-key (kbd "<f1> a") 'apropos)
 (global-set-key (kbd "<f1> f") 'counsel-describe-function)
