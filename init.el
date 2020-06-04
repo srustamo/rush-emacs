@@ -2532,18 +2532,83 @@ With C-u C-u: insert date and time"
 ; '(ispell-program-name "aspell")
 
 
-;;** http://filonenko-mikhail.blogspot.com/2012/03/emacs.html 12_08_2015
-(use-package flyspell)
-(use-package ispell)
+;;** ispell
+(use-package ispell
+  :defer t
+  :bind
+  :init
+  (setq dropbox "c:\\Users\\srstan\\Dropbox\\dictionaries")
+  ;; (setenv "DICTPATH" "c:\\ProgramData\\chocolatey\\lib\\hunspell.portable\\tools\\share\\hunspell\\")
+  ;; (setenv "DICTIONARY" "c:\\ProgramData\\chocolatey\\lib\\hunspell.portable\\tools\\share\\hunspell\\en_US")
+  ;; (setq ispell-program-name "c:\\ProgramData\\chocolatey\\bin\\hunspell.exe"
+  (setq ispell-program-name "hunspell"
+	;; Save dictionary in common location
+	;; ispell-extra-args `("-p" ,(expand-file-name "hunspell" dropbox))
+	)
+  (setq ispell-extra-args '("--sug-mode=ultra"))
 
-(setq
- ispell-program-name "aspell"
-; ispell-program-name "hunspell"
- ispell-extra-args '("--sug-mode=ultra"))
-
-(setq ispell-highlight-face (quote flyspell-incorrect))
-(setq ispell-have-new-look t)
-(setq ispell-enable-tex-parser t)
+  (setq ispell-local-dictionary-alist '(
+					))
+  (setq ispell-local-dictionary-alist '(
+  					(nil
+  					 "[[:alpha:]]"
+  					 "[^[:alpha:]]"
+  					 "[']"
+  					 t
+  					 ("-d" "en_US" "-p" "c:\\Users\\srstan\\Dropbox\\dictionaries\\personal_dict.en")
+  					 nil
+  					 iso-8859-1)
+  					("american"
+  					 "[[:alpha:]]"
+  					 "[^[:alpha:]]"
+  					 "[']"
+  					 t
+  					 ("-d" "en_US" "-p" "c:\\Users\\srstan\\Dropbox\\dictionaries\\personal_dict.en")
+  					 nil
+  					 iso-8859-1)
+					;; ("russian"
+					;;  "[[:alpha:]]"
+					;;  "[^[:alpha:]]"
+					;;  "[']"
+					;;  t
+					;;  ("-d" "ru_RU" "-p" "c:\\Users\\srstan\\Dropbox\\dictionaries\\personal_dict.ru")
+					;;  nil
+					;;  iso-8859-1)
+					;; ("russian"				; Russian.aff (KOI8-R charset)
+					;;  "[\341\342\367\347\344\345\263\366\372\351\352\353\354\355\356\357\360\362\363\364\365\346\350\343\376\373\375\370\371\377\374\340\361\301\302\327\307\304\305\243\326\332\311\312\313\314\315\316\317\320\322\323\324\325\306\310\303\336\333\335\330\331\337\334\300\321]"
+					;;  "[^\341\342\367\347\344\345\263\366\372\351\352\353\354\355\356\357\360\362\363\364\365\346\350\343\376\373\375\370\371\377\374\340\361\301\302\327\307\304\305\243\326\332\311\312\313\314\315\316\317\320\322\323\324\325\306\310\303\336\333\335\330\331\337\334\300\321]"
+					;;  ""
+					;;  nil
+  					;;  ("-d" "ru_RU" "-p" "c:\\Users\\srstan\\Dropbox\\dictionaries\\personal_dict.ru")
+					;;  nil
+					;;  koi8-r)
+					 ("russianw"
+					  "[ЁёА-я]"
+					  "[^ЁёА-я]"
+					  ;; "[АБВГДЕЖЗИЙКЛМНОПРСТУФХЧШЩЪЬЮЯабвгдежзийклмнопрстуфхцшщюя]"
+					  ;; "[^АБВГДЕЖЗИЙКЛМНОПРСТУФХЧШЩЪЬЮЯабвгдежзийклмнопрстуфхцшщюя]"
+					  ""
+					  t 
+					  ("-d" "ru_RU" "-p" "c:\\Users\\srstan\\Dropbox\\dictionaries\\personal_dict.ru")
+					  nil
+					  ;; windows-1251)
+					  ;; iso-8859-5)
+					  ;;04-06-2020 https://stackoverrun.com/ru/q/921610
+					  utf-8)
+					 ;; iso-8859-1)
+					;; ("russianw"				; russianw.aff (CP1251 charset)
+					;;  "[\300\301\302\303\304\305\250\306\307\310\311\312\313\314\315\316\317\320\321\322\323\324\325\326\327\330\331\334\333\332\335\336\337\340\341\342\343\344\345\270\346\347\350\351\352\353\354\355\356\357\360\361\362\363\364\365\366\367\370\371\374\373\372\375\376\377]"
+					;;  "[^\300\301\302\303\304\305\250\306\307\310\311\312\313\314\315\316\317\320\321\322\323\324\325\326\327\330\331\334\333\332\335\336\337\340\341\342\343\344\345\270\346\347\350\351\352\353\354\355\356\357\360\361\362\363\364\365\366\367\370\371\374\373\372\375\376\377]"
+					;;  ""
+					;;  nil
+  					;;  ("-d" "ru_RU" "-p" "c:\\Users\\srstan\\Dropbox\\dictionaries\\personal_dict.ru")
+					;;  nil
+					;;  windows-1251)
+  					))
+  (setq ispell-highlight-face (quote flyspell-incorrect))
+  (setq ispell-have-new-look t)
+  (setq ispell-enable-tex-parser t)
+  )
 ;(add-hook 'text-mode-hook 'flyspell-mode)
 ;(add-hook 'latex-mode-hook 'flyspell-mode)
 (setq flyspell-delay 1)
