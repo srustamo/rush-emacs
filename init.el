@@ -51,7 +51,9 @@
 (load (concat emacs-d "loaddefs.el") nil t)
 (load (concat emacs-d "personal/loaddefs.el") t t)
 (load (concat emacs-d "elisp/loaddefs.el") t t)
-
+;;** persisting variables
+(require 'persist)
+(require 'counsel-etags)
 ;;* Custom-set-variables (by emacs itself)
 ; 24.02.2017
 (setq custom-file "~/.emacs.d/custom.el")
@@ -461,7 +463,7 @@
   "disable mobile org idle sync"
   (interactive)
   (cancel-timer org-mobile-sync-timer))
-(org-mobile-sync-enable)
+;; (org-mobile-sync-enable)
 ;; 9 Jul 2014 http://stackoverflow.com/questions/8432108/how-to-automatically-do-org-mobile-push-org-mobile-pull-in-emacs
 ;;*** MobileOrg sync on exit or start
 ;;(add-hook 'after-init-hook 'org-mobile-pull)
@@ -1261,13 +1263,13 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;;his words ;; Previously, I've been trying to control the height of emacs on different
 ;; platforms. Stop doing that, set 'default-frame-alist with values that work
 ;; on all platforms.
-(setq default-frame-alist
-      '((wait-for-wm . nil)
-	(top . 0)
-	(width . 80)
-	(height . 163)
-	(tool-bar-lines . 0)
-	(menu-bar-lines . 0)))
+;; (setq default-frame-alist
+;;       '((wait-for-wm . nil)
+;; 	(top . 0)
+;; 	(width . 80)
+;; 	(height . 163)
+;; 	(tool-bar-lines . 0)
+;; 	(menu-bar-lines . 0)))
 ;;** Hide toolbar
 ;; 17:10 turn off toolbar http://serverfault.com/questions/132055/how-to-check-if-emacs-is-in-gui-mode-and-execute-tool-bar-mode-only-then
 ;;(if window-system
@@ -1859,6 +1861,8 @@ With C-u C-u: insert date and time"
 ;;27-02-2017 https://sam217pa.github.io/2016/09/01/emacs-iterm-integration/
 ;;29-03-2017 moved to /elisp
 (require 'open-iterm)
+;;** Terminal here
+(require 'rush-terminal-here)
 ;;* Testing ground
 ;; hello
 ;;* Buffers
@@ -2006,11 +2010,11 @@ With C-u C-u: insert date and time"
  :defer 2
   )
 ;;*** company-quickhelp 
-(use-package company-quickhelp
-  :hook (company-mode . company-quickhelp-mode)
-  :config
-  (setq company-quickhelp-delay .1)
-  (setq pos-tip-use-relative-coordinates t))
+;; (use-package company-quickhelp
+;;   :hook (company-mode . company-quickhelp-mode)
+;;   :config
+;;   (setq company-quickhelp-delay .1)
+;;   (setq pos-tip-use-relative-coordinates t))
 ;;*** company org-mode completion
 ;;;https://github.com/company-mode/company-mode/issues/50
 ;;(defun add-pcomplete-to-capf ()
@@ -2118,7 +2122,18 @@ With C-u C-u: insert date and time"
 (eval-after-load 'org '(run-at-time "00:59" 3600 'org-save-all-org-buffers))
 ;;** Backup directory
 ;; 3 Jul 2014 http://pages.sachachua.com/.emacs.d/Sacha.html#sec-1-4-4
-(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+(cond ((eq system-type 'windows-nt)
+       ;; Windows-specific code goes here.
+       (setq backup-directory-alist '(("." . "C:\\emacs_saves")))
+       )
+      ((eq system-type 'gnu/linux)
+       ;; Linux-specific code goes here.
+       (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+       )
+      ((eq system-type 'darwin)
+       ;; Mac-specific code goes here.
+       (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+       ))
 ;; 3 Jul 2014
 ;(setq delete-old-versions -1)
 (setq delete-old-versions t;; 3 Jul 2014 http://stackoverflow.com/questions/151945/how-do-i-control-how-emacs-makes-backup-files
@@ -2139,11 +2154,27 @@ With C-u C-u: insert date and time"
 ;    (concat dirname (file-name-nondirectory FILE))))
 ;;** Backup each save 18_Sep_14
 ;; from repo
-(use-package backup-each-save
-  ;; :defer 5
-  )
-(add-hook 'after-save-hook 'backup-each-save)
 
+(cond ((eq system-type 'windows-nt)
+       ;; Windows-specific code goes here.
+       (use-package backup-each-save
+	 ;; :defer 5
+	 )
+       )
+      ((eq system-type 'gnu/linux)
+       ;; Linux-specific code goes here.
+       (use-package backup-each-save
+	 ;; :defer 5
+	 )
+       (add-hook 'after-save-hook 'backup-each-save)
+       )
+      ((eq system-type 'darwin)
+       ;; Mac-specific code goes here.
+       (use-package backup-each-save
+	 ;; :defer 5
+	 )
+       (add-hook 'after-save-hook 'backup-each-save)
+       ))
 ;;** Auto-revert (file changed on disk)
 ;;I used to use =org-revert-all-org-buffers= but have since discovered
 ;;=global-auto-revert-mode=.  With this setting any files that change on
@@ -2399,6 +2430,7 @@ With C-u C-u: insert date and time"
 ;(simplenote-setup)
 ;;* Epub
 (use-package nov 
+ :disabled
  ;; :defer 5 
  :config
 ;; (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
@@ -2406,18 +2438,18 @@ With C-u C-u: insert date and time"
 )
 ;;* Emacs daemon
 (use-package server
- :defer 5 
+ ;; :defer 5 
  :config
 (unless (server-running-p)
   (server-start))
 )
 ;;* Environment
 ;; 16_07_2015 https://github.com/timothypratley/config/blob/master/emacs.d/lisp/packages.el
-(exec-path-from-shell-initialize)
+;; (exec-path-from-shell-initialize)
 ;;(setq insert-directory-program "gls")
 ;;* Start in full screen
 ;; 14 Jul 2014 http://www.emacswiki.org/emacs/FullScreen#toc13
-(set-frame-parameter nil 'fullscreen 'fullboth) ;; this starts in full screen
+;; (set-frame-parameter nil 'fullscreen 'fullboth) ;; this starts in full screen
 
 ;; 14 Jul 2014
 ; (require 'maxframe)
@@ -2459,66 +2491,6 @@ With C-u C-u: insert date and time"
 ;;  (setq ispell-program-name "hunspell")
 ;;  (setq ispell-extra-args '("-d en_US")))
 ;; )
-
-;;** http://blog.binchen.org/posts/what-s-the-best-spell-check-set-up-in-emacs.html 28_07_2015
-;; if (aspell installed) { use aspell}
-;; else if (hunspell installed) { use hunspell }
-;; whatever spell checker I use, I always use English dictionary
-;; I prefer use aspell because:
-;; 1. aspell is older
-;; 2. looks Kevin Atkinson still get some road map for aspell:
-;; @see http://lists.gnu.org/archive/html/aspell-announce/2011-09/msg00000.html
-;(defun flyspell-detect-ispell-args (&optional RUN-TOGETHER)
-;  "if RUN-TOGETHER is true, spell check the CamelCase words"
-;  (let (args)
-;    (cond
-;     ((string-match  "aspell$" ispell-program-name)
-;      ;; force the English dictionary, support Camel Case spelling check (tested with aspell 0.6)
-;      (setq args (list "--sug-mode=ultra" "--lang=en_US"))
-;      (if RUN-TOGETHER
-;          (setq args (append args '("--run-together" "--run-together-limit=5" "--run-together-min=2")))))
-;     ((string-match "hunspell$" ispell-program-name)
-;      (setq args nil)))
-;    args
-;    ))
-;
-;(cond
-; ((executable-find "aspell")
-;  (setq ispell-program-name "aspell"))
-; ((executable-find "hunspell")
-;  (setq ispell-program-name "hunspell")
-;  ;; just reset dictionary to the safe one "en_US" for hunspell.
-;  ;; if we need use different dictionary, we specify it in command line arguments
-;  (setq ispell-local-dictionary "en_US")
-;  (setq ispell-local-dictionary-alist
-;        '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8))))
-; (t (setq ispell-program-name nil)))
-;
-;;; ispell-cmd-args is useless, it's the list of *extra* arguments we will append to the ispell process when "ispell-word" is called.
-;;; ispell-extra-args is the command arguments which will *always* be used when start ispell process
-;(setq ispell-extra-args (flyspell-detect-ispell-args t))
-;;; (setq ispell-cmd-args (flyspell-detect-ispell-args))
-;(defadvice ispell-word (around my-ispell-word activate)
-;  (let ((old-ispell-extra-args ispell-extra-args))
-;    (ispell-kill-ispell t)
-;    (setq ispell-extra-args (flyspell-detect-ispell-args))
-;    ad-do-it
-;    (setq ispell-extra-args old-ispell-extra-args)
-;    (ispell-kill-ispell t)
-;    ))
-;
-;(defadvice flyspell-auto-correct-word (around my-flyspell-auto-correct-word activate)
-;  (let ((old-ispell-extra-args ispell-extra-args))
-;    (ispell-kill-ispell t)
-;    ;; use emacs original arguments
-;    (setq ispell-extra-args (flyspell-detect-ispell-args))
-;    ad-do-it
-;    ;; restore our own ispell arguments
-;    (setq ispell-extra-args old-ispell-extra-args)
-;    (ispell-kill-ispell t)
-;    ))
-
-
 
 ;;** http://www.linux.org.ru/forum/development/4457441
 ;(custom-set-variables
@@ -2617,7 +2589,7 @@ With C-u C-u: insert date and time"
 (setq flyspell-issue-welcome-flag nil)
 
 ;;** Flyspel with Aspell
-(setq ispell-list-command "--list")
+;; (setq ispell-list-command "--list")
 
 ;;** Popup instead of gui
 ;; http://www.emacswiki.org/emacs/FlySpell 29_07_2015
@@ -2921,6 +2893,9 @@ Version 2015-06-12"
   (with-eval-after-load "ranger" (bind-key "C-h" nil ranger-mode-map))
   ;; (setq ranger-hidden-regexp "^\\.?#\\|^\\.$\\|^\\.\\.$")
 )
+;;** dired all-the-icons
+;;22-05-2020 https://github.com/domtronn/all-the-icons.el/issues/28
+(setq inhibit-compacting-font-caches t)
   ;;* Syntax checking
 (use-package flycheck
   :defer 20
@@ -3228,8 +3203,25 @@ is already narrowed."
           t)
 
 ;(org-agenda nil "a")
-(exec-path-from-shell-initialize)
+;; (exec-path-from-shell-initialize)
 
+(cond ((eq system-type 'windows-nt)
+       ;; Windows-specific code goes here.
+       )
+      ((eq system-type 'gnu/linux)
+       ;; Linux-specific code goes here.
+       )
+      ((eq system-type 'darwin)
+       ;; Mac-specific code goes here.
+       (setq default-frame-alist
+	     '((wait-for-wm . nil)
+	       (top . 0)
+	       (width . 80)
+	       (height . 163)
+	       (tool-bar-lines . 0)
+	       (menu-bar-lines . 0)))
+       (exec-path-from-shell-initialize)
+       ))
 ;;** garbage collection threshold
 ;;28-02-2017 https://github.com/redguardtoo/emacs.d
 (setq gc-cons-threshold best-gc-cons-threshold)
@@ -3243,5 +3235,5 @@ is already narrowed."
 ;; Local Variables:
 ;; outline-regexp: ";;\\*+\\|\\`"
 ;; orgstruct-heading-prefix-regexp: ";;\\*+\\|\\`"
-;; eval: (when after-init-time (orgstruct-mode) (org-global-cycle 3))
+;; eval: (when after-init-time (orgstruct-mode))
 ;; End:
